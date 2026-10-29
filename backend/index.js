@@ -1,3 +1,6 @@
+// Runtime compatibility for Node.js 24+
+import "./compat.js";
+
 // packages
 import path from "path";
 import express from "express";
@@ -14,8 +17,6 @@ import orderRoutes from "./routes/orderRoutes.js";
 
 dotenv.config();
 const port = process.env.PORT || 5000;
-
-connectDB();
 
 const app = express();
 
@@ -37,4 +38,15 @@ app.get('/api/health', (req, res) => res.status(200).json({ status: 'ok' }));
 const __dirname = path.resolve();
 app.use("/uploads", express.static(path.join(__dirname + "/uploads")));
 
-app.listen(port, () => console.log(`Server running on port: ${port}`));
+// Connect to DB and listen only when not running automated tests
+const isTest =
+  process.env.NODE_ENV === "test" ||
+  process.execArgv.some((arg) => arg.startsWith("--test")) ||
+  process.argv.some((arg) => arg.includes("test"));
+
+if (!isTest) {
+  connectDB();
+  app.listen(port, () => console.log(`Server running on port: ${port}`));
+}
+
+export default app;

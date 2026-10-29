@@ -1,0 +1,44 @@
+# Dependencies
+node_modules/
+frontend/node_modules/
+.pnp
+.pnp.js
+
+# Environment variables and secrets
+.env
+.env.local
+.env.*.local
+*.env
+backend/.env
+K8s/secrets.yaml
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
+
+# Production build outputs
+dist/
+build/
+frontend/dist/
+frontend/build/
+
+# Coverage and test artifacts
+coverage/
+.nyc_output/
+
+# Academic reports and evidence (kept locally, excluded from repository)
+CCA2_CICD_Report.*
+docs/
+
+# OS and Editor metadata
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

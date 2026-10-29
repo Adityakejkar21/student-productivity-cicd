@@ -1,12 +1,15 @@
 import mongoose from "mongoose";
 
 const connectDB = async () => {
+  if (!process.env.MONGO_URI) {
+    console.log("No MONGO_URI specified; running server in standalone mode.");
+    return;
+  }
   try {
     await mongoose.connect(process.env.MONGO_URI);
-    console.log(`Successfully connnected to mongoDB 👍`);
+    console.log(`Successfully connected to mongoDB 👍`);
   } catch (error) {
-    console.error(`ERROR: ${error.message}`);
-    process.exit(1);
+    console.error(`MongoDB Connection Error: ${error.message}`);
   }
 };
 
